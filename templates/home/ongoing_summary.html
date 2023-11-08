@@ -1,0 +1,67 @@
+{% extends "base.html" %}<!-- This line extends the "base.html" template, inheriting its structure and styles -->
+{% block content %} <!-- This block defines the content section for this page -->
+<div class="body-wrapper">
+<!-- A table displaying ongoing emergency information -->
+    <table class="w-100 table mt-4 ms-2 me-2 shadow-lg table-hover" > 
+        <thead>
+            <tr>
+            <th scope="col">Emergency</th>
+            <th scope="col">Location</th>
+            <th scope="col">Index</th>
+        </tr>
+        </thead>
+        <tbody>
+<!-- Rows with ongoing emergency data -->
+            <tr class="table-primary"> 
+                <td scope="row">crime</td>
+                <td scope="row">waithaka</td>
+                <td scope="row">10</td>
+            </tr>
+            <tr class="table-warning">
+                <td scope="row">fire</td>
+                <td scope="row">ruaraka</td>
+                <td scope="row">7</td>
+            </tr>
+            <tr class="table-danger">
+                <td scope="row">medical</td>
+                <td scope="row">karen</td>
+                <td scope="row">4</td>
+            </tr>
+        </tbody>
+    </table>
+<!-- A section with cards displaying ongoing emergency information -->
+        <div class="row card-wrapper w-100 h-100 bg-white  mt-4 me-2 ms-2 shadow-lg ">
+           <div class="w-50 card-inner-wrapper">
+<!-- Card displaying total ongoing emergency counts -->
+            <div class="h-25 mt-5   card shadow-lg total-ongoing-emegencies-card">
+                <div class="card-body">
+                    <p>Fire: <strong>25</strong></p>
+                    <p>Medical: <strong>120</strong></p>
+                    <p>Crime : <strong>5</strong></p>
+                </div>
+            </div>
+<!-- Card displaying additional ongoing emergency information -->
+            <div class=" mt-5  h-25 ongoing-emergency-info-card card shadow-lg">
+                <div class="card-body">
+                <p>Location with most ongoing emergencies: <strong>Ruaraka</strong></p>
+                <p>most common ongoing emergency: <strong>Medical</strong></p>
+            </div>
+            </div>
+        </div> 
+ <!-- A chart (Doughnut chart) displayed in the remaining 50% of the section -->
+        <div class="w-50 ongoing-emergency-chart-doughnut">
+            <canvas id="ongoinglocation"></canvas>
+          </div>
+        </div>
+       
+    </div>
+
+
+
+
+
+
+
+
+
+{% endblock %} <!-- End of the 'content' block for this page -->

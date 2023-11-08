@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>form </title>
+    <!-- Bootstrap core CSS -->
+<!-- Link to an external Bootstrap CSS file from the static directory -->
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+</head>
+<body>
+    <div class="container-fluid ms-0 ">
+    <div class="row text-white ">
+        <p class="bg-success text-center">A form to collect incident data for analysis </p>
+    </div>
+        <form action="" method="post" class="form ms-1 me-1">
+            {% csrf_token %}
+
+                <div class="mb-3">
+                    <select class="form-select" id="inputGroupSelect01">
+                        <option selected>Medical </option>
+                        <option value="1">Crime</option>
+                        <option value="2">Fire</option>
+                        <option value="3">Medical Crime</option>
+                        <option value="3">Medical Fire</option>
+                        <option value="3">Crime Fire</option>
+                        <option value="3">Medical Crime Fire</option>
+                       
+                      </select>
+                </div>
+                <div class="mb-3">
+                  <label for="casualty-number-input" class="form-label">Casualty Number</label>
+                  <input type="number" class="form-control" id="casualty-number-input">
+                </div>
+                <div class="mb-3">
+                    <label for="spread-radius-input" class="form-label">Approximate Spread</label>
+                    <input type="number" class="form-control" id="spread-radius-input">
+                  </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+             
+           
+    
+        </form>
+
+
+    </div>
+
+</body>
+</html>

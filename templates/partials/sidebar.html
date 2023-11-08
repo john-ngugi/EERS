@@ -1,0 +1,24 @@
+
+<div class="sidebar-main">
+  <form action="" method="post" id="form">
+    {% csrf_token %} <!-- This Django template tag includes a security token to prevent Cross-Site Request Forgery (CSRF) attacks. It's used in forms. -->
+    <!-- Input field for searching a location -->
+    <input type="text" placeholder="search location" name="location" class="mt-4" id="search-location">
+    <!-- Submit button for the location search form -->
+    <input class="btn btn-sm bg-primary text-white mt-1" id="location-submit-btn"  type="submit" value="Search">
+  </form>
+   <!-- Unordered list for navigation links -->
+  <ul>
+    <!-- Link to the 'home' view using Django's URL template tag -->
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <hr><!-- Horizontal line as a visual separator -->
+    <!-- Link to the 'emergencies' view using Django's URL template tag -->
+    <li><a href="{% url 'emergencies' %}">Emergencies</a></li>
+    <hr>
+    <!-- Additional navigation links (you can add more links here) -->
+    <li><a href="{% url 'ongoing-emergencies' %}">Ongoing Summary</a></li>
+    <hr>
+    <li><a href="#">Emergency Summary</a></li>
+  
+  </ul>
+</div>
