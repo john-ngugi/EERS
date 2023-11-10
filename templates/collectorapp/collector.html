@@ -58,31 +58,26 @@ crossorigin=""></script>
         </form>
 
     </div>
-
-    <p>Displaying location using Latitude and Longitude</p>
- 
-    <button class="geeks" onclick="getlocation()">
-        Click Me
-    </button>
-    <p id="demo1"></p>
- 
-    <script>
-        let variable1 = document.getElementById("demo1");
-        function getlocation() {
-            navigator.geolocation.getCurrentPosition(showLoc);
-        }
-        function showLoc(pos) {
-            variable1.innerHTML =
-                "Latitude: " +
-                pos.coords.latitude +
-                "<br>Longitude: " +
-                pos.coords.longitude;
-        }
-    </script>
     <script>
         const getLocationBtn = document.getElementById("get-location-bton");
 var coordis = [];
+var facility_data =""
 
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
 
 
 getLocationBtn.addEventListener('click',()=>{
@@ -92,7 +87,49 @@ getLocationBtn.addEventListener('click',()=>{
         console.log('calculating');
         coordis.push([position.coords.latitude, position.coords.longitude]);
         console.log('coordinates are: ', coordis);
-        
+
+    const latitude = coordis[0][0];
+    const longitude = coordis[0][1];
+    const radius = 4000; // 2 kilometers
+
+    // Construct the Overpass query
+    const query = `[out:json];
+    (
+    node(around:${radius},${latitude},${longitude})["amenity"="hospital"];
+    );
+    out body;
+    >;
+    out skel qt;`;
+
+    // Send the query to the Overpass API
+    fetch('https://overpass-api.de/api/interpreter', {
+            method: 'POST',
+            body: query
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Process and display the hospital data on your map or in your application
+            console.log(data);
+            facility_data = data;
+            console.log('first',facility_data);
+            fetch('/data-retriever',{
+                method: 'POST',
+                headers: {
+                    "X-CSRFToken": getCookie("csrftoken"),
+                    "Accept": "application/json",
+                    'Content-Type': 'application/json'
+                  },
+                body: JSON.stringify({data: facility_data}),
+            })
+            coordis=[]
+           
+        })
+        .catch(error => {
+            console.error('Error fetching hospital data:', error);
+        });
+
+
+
      });
       
     } else {
