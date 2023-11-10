@@ -24,7 +24,7 @@ var redIcon = new L.Icon({
 // Get references to DOM elements
 const searchLocationInput=document.getElementById("search-location");
 const locationSubmit=document.getElementById("location-submit-btn");
-const form=document.getElementById("form");
+const form = document.getElementById("form");
 
 // Add an event listener to the form to handle form submission
 form.addEventListener("submit",(e)=>{
