@@ -1,12 +1,17 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>signup</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="{% static 'css/dashboard.css' %}"> -->
+
 
 </head>
 <body>
+<div class="form-wrapper">
     {% if messages %}
     <ul class="messages">
         {% for message in messages %}
@@ -14,23 +19,26 @@
         {% endfor %}
     </ul>
     {% endif %}
-    <div class="form-group">
-    <div action="" method="post">
+
+    <form action="" method="post" class="form form-control w-25 h-50 mt-5">
         {% csrf_token %}
-        <div class="form-wrapper row g-3 align-items-center" style="display: flex;flex-direction:column;">
-        <div class="form">
-          {{form.as_p}}
-            <!--<label for="Username" class=" form-control">username</label>
-            <label for="password" class=" form-control">password</label>-->
-        
+        <div class="form-group">
+            <label  class="form-label p-2"  for="username-input-auth">Enter username</label>
+            <input name="username" id="username-input-auth" class="form-control form-control-md p-2" type="text" placeholder="username">
+            <label  class="form-label p-2"  for="password-input-auth">Enter password</label>
+            <input name="password" id="password-input-auth" class="form-control form-control-md p-2" type="text" placeholder="password">
+            <Button type="submit" class="btn btn-primary mt-2" >{{value}}</Button> 
         </div>
-          <div>
-            <Button type="submit" class="btn btn-secondary">{{value}}</Button> 
-            <!--<input type="submit" value="Login" class="btn btn-primary">-->
-    </div>
-</div>
-</div>
     </form>
-   
+    
+    <!-- <form action="" method="post" class="form form-control w-25 h-100 ">
+        {% csrf_token %}
+       {{form.as_p}}
+       <Button type="submit" class="btn btn-primary mt-2" >{{value}}</Button> 
+    </form> -->
+</div>
+
+  
+
 </body>
 </html>

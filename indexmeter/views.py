@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import Emergencies
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from .forms import UserForm
+# from .forms import UserForm
 # Create your views here.
 
 def calculateSaveIndex(request):

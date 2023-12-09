@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect
+from django.contrib import auth
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm,authenticate
 from django.contrib import messages
 from .models import User
@@ -17,9 +18,15 @@ def register(request):
 
 def login(request):
     form = AuthenticationForm(request.POST)
+    
     if request.method == 'POST':
-        form_class = UserForm
-        user = authenticate(username=request.POST['username'], password=request.POST['password'])
+        print(request.POST)
+        print('\t', request.POST.get('username'))
+        username = request.POST['username']
+        password = request.POST['password']
+        # form_class = UserForm
+        user = auth.authenticate(request, username=username, password=password)
+        print('user', user)
         if user is not None:
             print(user.username)
             return redirect('home')

@@ -50,6 +50,14 @@ crossorigin=""></script>
                     <label for="spread-radius-input" class="form-label">Approximate Spread</label>
                     <input type="number" class="form-control" id="spread-radius-input">
                   </div>
+
+                  <div class="mb-3">
+                    <label for="specific-resource-input" class="form-label">Specific resource you might need </label>
+                        <select class="form-select" id="specific-resource-input">
+                            <option selected>Standard </option>
+                            <option value="1">Speciallized</option>
+                          </select>
+                  </div>  
                 <button type="button" class="btn btn-primary " id="get-location-bton">Get Location</button>
                 <button type="submit" class="btn btn-primary">Submit</button>
              
@@ -119,7 +127,7 @@ getLocationBtn.addEventListener('click',()=>{
                     "Accept": "application/json",
                     'Content-Type': 'application/json'
                   },
-                body: JSON.stringify({data: facility_data}),
+                body: JSON.stringify({data: facility_data,coordinates_x:coordis[0][0],coordinates_y:coordis[0][1]}),
             })
             coordis=[]
            

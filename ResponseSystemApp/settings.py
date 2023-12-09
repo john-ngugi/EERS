@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ResponseApp',
     'indexmeter',
-    'fieldcollectionapp'
+    'fieldcollectionapp',
+    'authenticator',
 ]
 
 MIDDLEWARE = [
