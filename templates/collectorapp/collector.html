@@ -69,15 +69,27 @@
         </div>
     </div>
     <script>
+        // Get references to Document Object Model (DOM) elements
         const getLocationBtn = document.getElementById("get-location-bton");
         const casualtyInput = document.getElementById('casualty-number-input');
         const spreadRadius = document.getElementById('spread-radius-input');
+<<<<<<< HEAD
         const emergency_type_input = document.getElementById('inputGroupSelect01');
         const specific_res_input = document.getElementById('specific-resource-input');
 
+=======
+<<<<<<< HEAD
         var coordis = [];
         var facility_data = ""
 
+        // Function to get the value of a specific cookie by name
+=======
+        emergency_type_input = document.getElementById('inputGroupSelect01');
+>>>>>>> af3278c4c8574e983ccce80c97bb46cb818e372a
+        var coordis = [];
+        var facility_data = ""
+
+>>>>>>> 6b6ce4644b68fbbe3a7b72771200a52a2b0551d2
         function getCookie(name) {
             let cookieValue = null;
             if (document.cookie && document.cookie !== '') {
@@ -93,7 +105,11 @@
             }
             return cookieValue;
         }
+<<<<<<< HEAD
+// Function to fetch location name using reverse geocoding
+=======
 
+>>>>>>> 6b6ce4644b68fbbe3a7b72771200a52a2b0551d2
         function getName(lat, lon) {
             const apiUrl = `https://geocode.maps.co/reverse?lat=${lat}&lon=${lon}`;
 
@@ -118,6 +134,26 @@
         }
 
 
+<<<<<<< HEAD
+// Event listener for the 'Get Location' button
+        getLocationBtn.addEventListener('click', () => {
+            if (casualtyInput.value == "" && spreadRadius.value == "") {
+                getLocationBtn.disabled == true;
+                getLocationBtn.style.backgroundColor = 'grey'
+            } else {
+                getLocationBtn.style.backgroundColor = '#2780e3'
+                getLocationBtn.disabled == false;
+                console.log('getting location.');
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(async(position) => {
+                        console.log('calculating');
+                        coordis.push([position.coords.latitude, position.coords.longitude]);
+                        console.log('coordinates are: ', coordis);
+
+                        const latitude = coordis[0][0];
+                        const longitude = coordis[0][1];
+                        const radius = 4000; // 4 kilometers
+=======
 
         getLocationBtn.addEventListener('click', () => {
             if (casualtyInput.value == "" && spreadRadius.value == "") {
@@ -145,8 +181,14 @@
                         const latitude = coordis[0][0];
                         const longitude = coordis[0][1];
                         const radius = 4000; // 2 kilometers
+<<<<<<< HEAD
                         console.log('casualty_no = ', casualty_no)
                             // Construct the Overpass query
+=======
+>>>>>>> 6b6ce4644b68fbbe3a7b72771200a52a2b0551d2
+
+                        // Construct the Overpass query
+>>>>>>> af3278c4c8574e983ccce80c97bb46cb818e372a
                         const query = `[out:json];
                         (
                         node(around:${radius},${latitude},${longitude})["amenity"="hospital"];
@@ -154,6 +196,56 @@
                         out body;
                         >;
                         out skel qt;`;
+<<<<<<< HEAD
+
+                        try {
+                            // Send the query to the Overpass API
+                            const response = await fetch('https://overpass-api.de/api/interpreter', {
+                                method: 'POST',
+                                body: query,
+                            });
+
+                            const data = await response.json();
+                            console.log(data);
+
+                            // Process and display the hospital data on your map or in your application
+                            facility_data = data;
+                            console.log('first', facility_data);
+
+                            // Reverse Geocoding
+                            const displayName = await getName(latitude, longitude);
+                            console.log('Display Name:', displayName);
+
+                            // Use the obtained data in the second fetch
+                            fetch('/data-retriever', {
+                                method: 'POST',
+                                headers: {
+                                    "X-CSRFToken": getCookie("csrftoken"),
+                                    "Accept": "application/json",
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    data: facility_data,
+                                    coordinates_x: latitude,
+                                    coordinates_y: longitude,
+                                    name: displayName,
+                                }),
+                            });
+
+                            coordis = [];
+                        } catch (error) {
+                            console.error('Error:', error);
+                        }
+                    });
+                } else {
+                    getLocationBtn.innerHTML = "Geolocation is not supported by this browser.";
+                }
+            }
+
+        });
+
+        // Function that handles the geolocation position
+=======
 
                         try {
                             // Send the query to the Overpass API
@@ -207,6 +299,7 @@
             spreadRadius.value = "";
         });
 
+>>>>>>> 6b6ce4644b68fbbe3a7b72771200a52a2b0551d2
         function showPosition(position) {
 
 

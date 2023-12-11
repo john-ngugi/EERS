@@ -33,6 +33,9 @@ def dataRetriever(request):
        x_coords =json.loads(request.body).get('coordinates_x')
        y_coords =json.loads(request.body).get('coordinates_y')
        name =json.loads(request.body).get('name')
+<<<<<<< HEAD
+       print(x_coords,y_coords,name)
+=======
        type = json.loads(request.body).get('type')
        casualty_no = json.loads(request.body).get('casualty_no')
        spread_radius = json.loads(request.body).get('spread_radius')
@@ -55,6 +58,7 @@ def dataRetriever(request):
                 new_emergency.index = index
                 # Save the new instance to the database
                 new_emergency.save()
+>>>>>>> 6b6ce4644b68fbbe3a7b72771200a52a2b0551d2
        def save_coordinates_to_database(x_coords, y_coords,name):
             if x_coords is not None and y_coords is not None:
                 # Create a new Coordinates instance
@@ -65,8 +69,16 @@ def dataRetriever(request):
 
                 # Save the new instance to the database
                 new_coordinates.save()
+<<<<<<< HEAD
+       save_coordinates_to_database(x_coords, y_coords,name)        
+=======
        save_coordinates_to_database(x_coords, y_coords,name)   
+<<<<<<< HEAD
        save_emergencies_to_database(request.user,x_coords,y_coords,name,type,index)     
+=======
+       save_emergencies_to_database(request.user,x_coords,y_coords,name,type)     
+>>>>>>> 6b6ce4644b68fbbe3a7b72771200a52a2b0551d2
+>>>>>>> af3278c4c8574e983ccce80c97bb46cb818e372a
        return JsonResponse({'data':data},safe=False)
     return render(request,"collectorapp/collector.html")
 

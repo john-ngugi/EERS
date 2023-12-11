@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import *
+from .models import *  # Import all models from the current directory
+
 # Register your models here.
 
 admin.site.register(Coordinates)
