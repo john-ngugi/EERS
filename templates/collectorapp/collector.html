@@ -72,7 +72,9 @@
         const getLocationBtn = document.getElementById("get-location-bton");
         const casualtyInput = document.getElementById('casualty-number-input');
         const spreadRadius = document.getElementById('spread-radius-input');
-        emergency_type_input = document.getElementById('inputGroupSelect01');
+        const emergency_type_input = document.getElementById('inputGroupSelect01');
+        const specific_res_input = document.getElementById('specific-resource-input');
+
         var coordis = [];
         var facility_data = ""
 
@@ -121,7 +123,14 @@
             if (casualtyInput.value == "" && spreadRadius.value == "") {
                 getLocationBtn.disabled == true;
                 getLocationBtn.style.backgroundColor = 'grey'
+
             } else {
+                const casualty_no = casualtyInput.value;
+                const spread_radius = spreadRadius.value;
+                const specific_res = specific_res_input.value
+                const emergency_type = emergency_type_input.value;
+
+                console.log('spread_radius = ', spreadRadius.value)
                 getLocationBtn.style.backgroundColor = '#2780e3'
                 getLocationBtn.disabled == false;
                 console.log('getting location.');
@@ -130,12 +139,14 @@
                         console.log('calculating');
                         coordis.push([position.coords.latitude, position.coords.longitude]);
                         console.log('coordinates are: ', coordis);
-                        const emergency_type = emergency_type_input.value
+
+
+
                         const latitude = coordis[0][0];
                         const longitude = coordis[0][1];
                         const radius = 4000; // 2 kilometers
-
-                        // Construct the Overpass query
+                        console.log('casualty_no = ', casualty_no)
+                            // Construct the Overpass query
                         const query = `[out:json];
                         (
                         node(around:${radius},${latitude},${longitude})["amenity"="hospital"];
@@ -162,7 +173,8 @@
                             const displayName = await getName(latitude, longitude);
                             console.log('Display Name:', displayName);
                             console.log(emergency_type)
-                                // Use the obtained data in the second fetch
+
+                            // Use the obtained data in the second fetch
                             fetch('/data-retriever', {
                                 method: 'POST',
                                 headers: {
@@ -176,6 +188,9 @@
                                     coordinates_y: longitude,
                                     name: displayName,
                                     type: emergency_type,
+                                    casualty_no: casualty_no,
+                                    spread_radius: spread_radius,
+                                    specific_res: specific_res,
                                 }),
                             });
 
