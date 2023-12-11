@@ -1,6 +1,44 @@
-{% extends "base.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signup</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="{% static 'css/dashboard.css' %}"> -->
 
-<div class="title">
-    <h1> Lucia </h1>
+
+</head>
+<body>
+<div class="form-wrapper">
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <form action="" method="post" class="form form-control w-25 h-50 mt-5">
+        {% csrf_token %}
+        <div class="form-group">
+            <label  class="form-label p-2"  for="username-input-auth">Enter username</label>
+            <input name="username" id="username-input-auth" class="form-control form-control-md p-2" type="text" placeholder="username">
+            <label  class="form-label p-2"  for="password-input-auth">Enter password</label>
+            <input name="password" id="password-input-auth" class="form-control form-control-md p-2" type="text" placeholder="password">
+            <Button type="submit" class="btn btn-primary mt-2" >{{value}}</Button> 
+        </div>
+    </form>
+    
+    <!-- <form action="" method="post" class="form form-control w-25 h-100 ">
+        {% csrf_token %}
+       {{form.as_p}}
+       <Button type="submit" class="btn btn-primary mt-2" >{{value}}</Button> 
+    </form> -->
 </div>
 
+  
+
+</body>
+</html>

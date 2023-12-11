@@ -23,5 +23,6 @@ urlpatterns = [
     # Include URL patterns from the "ResponseApp" app
     path("",include("ResponseApp.urls")),
     path("fc/",include("fieldcollectionapp.urls")),
+    path('authenticator/',include("authenticator.urls"))
     
 ]
