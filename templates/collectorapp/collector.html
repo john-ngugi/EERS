@@ -34,12 +34,12 @@
                         <label for="inputGroupSelect01" class="form-label"> Emergency Type</label>
                         <select class="form-select" id="inputGroupSelect01">
                         <option selected>Medical </option>
-                        <option value="1">Crime</option>
-                        <option value="2">Fire</option>
-                        <option value="3">Medical Crime</option>
-                        <option value="3">Medical Fire</option>
-                        <option value="3">Crime Fire</option>
-                        <option value="3">Medical Crime Fire</option>
+                        <option value="crime">Crime</option>
+                        <option value="fire">Fire</option>
+                        <option value="medical crime">Medical Crime</option>
+                        <option value="medical fire">Medical Fire</option>
+                        <option value="crime fire">Crime Fire</option>
+                        <option value="medical crime fire">Medical Crime Fire</option>
                        
                       </select>
                     </div>
@@ -72,6 +72,7 @@
         const getLocationBtn = document.getElementById("get-location-bton");
         const casualtyInput = document.getElementById('casualty-number-input');
         const spreadRadius = document.getElementById('spread-radius-input');
+        emergency_type_input = document.getElementById('inputGroupSelect01');
         var coordis = [];
         var facility_data = ""
 
@@ -129,7 +130,7 @@
                         console.log('calculating');
                         coordis.push([position.coords.latitude, position.coords.longitude]);
                         console.log('coordinates are: ', coordis);
-
+                        const emergency_type = emergency_type_input.value
                         const latitude = coordis[0][0];
                         const longitude = coordis[0][1];
                         const radius = 4000; // 2 kilometers
@@ -160,8 +161,8 @@
                             // Reverse Geocoding
                             const displayName = await getName(latitude, longitude);
                             console.log('Display Name:', displayName);
-
-                            // Use the obtained data in the second fetch
+                            console.log(emergency_type)
+                                // Use the obtained data in the second fetch
                             fetch('/data-retriever', {
                                 method: 'POST',
                                 headers: {
@@ -174,6 +175,7 @@
                                     coordinates_x: latitude,
                                     coordinates_y: longitude,
                                     name: displayName,
+                                    type: emergency_type,
                                 }),
                             });
 
@@ -186,7 +188,8 @@
                     getLocationBtn.innerHTML = "Geolocation is not supported by this browser.";
                 }
             }
-
+            casualtyInput.value = "";
+            spreadRadius.value = "";
         });
 
         function showPosition(position) {
