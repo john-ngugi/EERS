@@ -3,17 +3,18 @@
 {% block content %}
 <!-- This block defines the content section for this page -->
 <div class="body-wrapper">
-    <!-- A table displaying emergency information -->
-    <table class="w-100 table mt-4 ms-2 me-2 shadow-lg table-hover">
-        <thead>
-            <tr>
-                <th scope="col">Emergency</th>
-                <th scope="col">Location</th>
-                <th scope="col">Index</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Rows with emergency data -->
+    <div class="container">
+        <!-- A table displaying emergency information -->
+        <table class="w-100 table mt-4 ms-2 me-2 shadow-lg table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Emergency</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Index</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows with emergency data
             <tr class="table-primary">
                 <td scope="row">crime</td>
                 <td scope="row">waithaka</td>
@@ -28,25 +29,51 @@
                 <td scope="row">medical</td>
                 <td scope="row">karen</td>
                 <td scope="row">4</td>
-            </tr>
-        </tbody>
-    </table>
+            </tr> -->
+
+                {% for emergency in page_obj %}
+                <tr class="{% if emergency.3 == 'Fire' %}table-warning{% elif emergency.3 == 'Medical' %}table-danger{% elif emergency.3 == 'Crime' %}table-primary{% endif %}">
+                    <td scope="row">{{ emergency.3 }}</td>
+                    <td scope="row">{{ emergency.2 }}</td>
+                    <td scope="row">{{ emergency.4 }}</td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+    <div class="container pagination-container">
+
+        <small class="py-3">  Showing page {{page_obj.number}} of {{ page_obj.paginator.num_pages }}</small>
+
+        <ul class="pagination float-end mr-auto">
+            {% if page_obj.has_previous %} {% if page_obj.number == 1 %}
+            <li class="page-item active"> {% endif %}<a class="page-link" href="?page=1">&laquo; 1</a></li>
+            <li class="page-item"> <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+            {% endif %} {% if page_obj.has_next %}
+            <li class="page-item"> <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+            <li class="page-item"> <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages}} &raquo;</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+
     <!-- A section with cards displaying emergency information -->
-    <div class="row card-wrapper w-100 h-100 bg-white  mt-4 me-2 ms-2 shadow-lg ">
+    <div class="row card-wrapper w-100 h-100 bg-white  mt-4 me-2 ms-2 ">
         <div class="w-50 card-inner-wrapper">
             <!-- Card displaying total emergency counts -->
             <div class="h-25 mt-5   card shadow-lg total-emegencies-card">
                 <div class="card-body">
-                    <p>Fire: <strong>25</strong></p>
-                    <p>Medical: <strong>120</strong></p>
-                    <p>Crime : <strong>5</strong></p>
+                    <p>Fire: <strong>{{total_fire}}</strong></p>
+                    <p>Medical: <strong>{{total_medical}}</strong></p>
+                    <p>Crime : <strong>{{total_crime}}</strong></p>
                 </div>
             </div>
             <!-- Card displaying additional emergency information -->
             <div class=" mt-5  h-50 emergency-info-card card shadow-lg">
                 <div class="card-body">
-                    <p>Location with most emergencies: <strong>Ruaraka</strong></p>
-                    <p>most common emergency: <strong>Medical</strong></p>
+                    <p>Location with most emergencies: <strong>{{mode_locations}}</strong></p>
+                    <p>most common emergency: <strong>{{mode_emergency}}</strong></p>
                     <p>Avaerage time to respond : <strong>20min</strong></p>
                 </div>
             </div>
@@ -60,10 +87,6 @@
 </div>
 
 
-
-<script>
-    const url = "/indices/index/"
-</script>
 
 
 

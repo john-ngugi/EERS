@@ -14,7 +14,7 @@
 
     <form action="" method="post">
         {% csrf_token %}
-        <div class="form-wrapper d-flex flex-column  align-items-center justify-content-center mt-5">
+        <div class="container d-flex flex-column  align-items-center justify-content-center mt-5">
             <div class="card">
                 <div class="card-title text-center">
                     <h3>Register</h3>
@@ -23,6 +23,7 @@
                     {{form|crispy}}
                     <Button type="submit" class="btn btn-primary ">{{value}}</Button>
                 </div>
+                <small> Already have an account <span> <a href="{% url 'login' %}">login </a></span></small>
             </div>
 
         </div>

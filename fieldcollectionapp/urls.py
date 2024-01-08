@@ -7,6 +7,6 @@ from ResponseApp.views import dataRetriever
 # Define URL patterns for the "ResponseApp" app
 urlpatterns=[
     path("field-collector/",views.collector,name="collector"),
-    path("/fc/field-collector/",dataRetriever,name="data-retriever"),
+    path("fc/field-collector/",dataRetriever,name="data-retriever"),
     
 ]

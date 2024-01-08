@@ -9,10 +9,14 @@ class Emergencies(models.Model):
     index = models.IntegerField(null=True)
     lat = models.FloatField(default=0.0)
     lon = models.FloatField(default=0.0)
-
+    responded_to = models.BooleanField(default= False)
     def __str__(self):
         return self.location
 
 class indexes(models.Model):
     emergency=models.ForeignKey(Emergencies,on_delete= models.CASCADE)   
     index = models.IntegerField(blank=True) 
+
+
+
+    

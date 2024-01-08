@@ -21,9 +21,9 @@ from django.urls import path,include
 urlpatterns = [
     path('admin/', admin.site.urls), # URL for the Django admin interface
     # Include URL patterns from the "ResponseApp" app
-    path("",include("ResponseApp.urls")),
+    path("ResponseApp/",include("ResponseApp.urls")),
     path("fc/",include("fieldcollectionapp.urls")),
-    path('authenticator/',include("authenticator.urls")),
+    path('',include("authenticator.urls")),
     path('indices/',include("indexmeter.urls"))
     
 ]

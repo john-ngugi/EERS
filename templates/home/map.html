@@ -1,38 +1,37 @@
 {% extends "base.html" %} {% block content %}
 <div class="map-container">
-<div id="map"></div>
-<div class="map-row">
-<div class="card w-25 mt-4 bg-danger shadow-lg">
-    <div class="card-body ms-2  bg-light h-75">
-        <h5 class="card-title">Medical Emergency</h5>
-        <p class="card-text">
-           <h6 class="card-text">Total Available Resources</h6>
-           hospitals : <strong>34</strong><br>
-           Ambulance : <strong>100</strong>
-        </p>
+    <div id="map"></div>
+    <div class="map-row">
+        <div class="card w-25 mt-4 bg-danger shadow-lg">
+            <div class="card-body ms-2  bg-light h-75">
+                <h5 class="card-title text-center">Medical Emergency</h5>
+                <p class="card-text">
+                    <h6 class="card-text text-center">Total Available Resources</h6>
+                    <h1 class="text-center"><strong>{{medical}}</strong></h1>
+
+                </p>
             </div>
-</div>
-<div class="card w-25 mt-4 bg-primary shadow-lg">
-    <div class="card-body ms-2  bg-light h-75">
-        <h5 class="card-title">Police Emergency</h5>
-        <p class="card-text">
-           <h6 class="card-text">Total Available Resources</h6>
-           Police stations : <strong>34</strong><br>
-           Partol Units : <strong>100</strong>
-        </p>
+        </div>
+        <div class="card w-25 mt-4 bg-primary shadow-lg">
+            <div class="card-body ms-2  bg-light h-75">
+                <h5 class="card-title text-center">Police Emergency</h5>
+                <p class="card-text">
+                    <h6 class="card-text text-center">Total Available Resources</h6>
+                    <h1 class="text-center"><strong>{{crime}}</strong></h1>
+
+                </p>
             </div>
-</div>
-<div class="card w-25 mt-4 bg-warning shadow-lg">
-    <div class="card-body ms-2  bg-light h-75">
-        <h5 class="card-title">Fire Emergency</h5>
-        <p class="card-text">
-           <h6 class="card-text">Total Available Resources</h6>
-           Fire stations : <strong>34</strong><br>
-           Water Volume : <strong>100l</strong>
-        </p>
+        </div>
+        <div class="card w-25 mt-4 bg-warning shadow-lg">
+            <div class="card-body ms-2  bg-light h-75">
+                <h5 class="card-title text-center">Fire Emergency</h5>
+                <p class="card-text">
+                    <h6 class="card-text text-center">Total Available Resources</h6>
+                    <h1 class="text-center"><strong>{{fire}}</strong></h1>
+
+                </p>
             </div>
+        </div>
+    </div>
 </div>
-</div>
-</div>
-{% endblock  %}
-{% block main %} {% endblock %}
+{% endblock %} {% block main %} {% endblock %}

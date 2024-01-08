@@ -20,6 +20,8 @@ def calculateSaveIndex(request):
     #   user = request.POST.get('User')
       emergencies = Emergencies.objects.filter(user= request.user).all()
       print(list(emergencies))
+
+      # return render(request,)
     return JsonResponse(emergency_list,safe=False)
   
 
