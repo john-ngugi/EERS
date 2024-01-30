@@ -1,93 +1,104 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <!-- Set character set and viewport for responsiveness -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>form </title>
-    <!-- Bootstrap core CSS -->
+
     <!-- Link to an external Bootstrap CSS file from the static directory -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 
     <!-- Link to an external Leaflet CSS file from an external source -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
     <!-- Include the Leaflet JavaScript library from an external source -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
     <!-- Include the Chart.js JavaScript library from an external source -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-
 </head>
 
 <body>
+    <!-- Container for the page content using Bootstrap classes -->
     <div class="container-fluid ms-0 mt-5 align-items-center d-flex flex-column justify-self-center">
+        <!-- Card for the main content -->
         <div class="card w-75">
+            <!-- Card title for the form section -->
             <div class="card-title bg-success text-center text-white">
-                <h3 class="mt-3  h-25">DATA FORM </h3>
+                <h3 class="mt-3 h-25">DATA FORM </h3>
             </div>
+            <!-- Card body containing the form -->
             <div class="card-body">
+                <!-- Form for user data entry using POST method and CSRF token for security -->
                 <form action="" method="post" class="form ms-1 me-1">
                     {% csrf_token %}
 
+                    <!-- Dropdown for Emergency Type selection -->
                     <div class="mb-3">
                         <label for="inputGroupSelect01" class="form-label"> Emergency Type</label>
                         <select class="form-select" id="inputGroupSelect01">
-                        <option selected>Medical </option>
-                        <option value="Crime">Crime</option>
-                        <option value="Fire">Fire</option>
-                        <option value="medical crime">Medical Crime</option>
-                        <option value="medical fire">Medical Fire</option>
-                        <option value="crime fire">Crime Fire</option>
-                        <option value="medical crime fire">Medical Crime Fire</option>
-                       
-                      </select>
+                            <option selected>Medical</option>
+                            <option value="Crime">Crime</option>
+                            <option value="Fire">Fire</option>
+                            <option value="medical crime">Medical Crime</option>
+                            <option value="medical fire">Medical Fire</option>
+                            <option value="crime fire">Crime Fire</option>
+                            <option value="medical crime fire">Medical Crime Fire</option>
+                        </select>
                     </div>
+
+                    <!-- Input field for Casualty Number -->
                     <div class="mb-3">
                         <label for="casualty-number-input" class="form-label">Casualty Number</label>
                         <input type="number" class="form-control" id="casualty-number-input">
                     </div>
+
+                    <!-- Input field for Approximate Spread -->
                     <div class="mb-3">
                         <label for="spread-radius-input" class="form-label">Approximate Spread</label>
                         <input type="number" class="form-control" id="spread-radius-input">
                     </div>
 
+                    <!-- Dropdown for Specific Resource selection -->
                     <div class="mb-3">
-                        <label for="specific-resource-input" class="form-label">Specific resource you might need </label>
+                        <label for="specific-resource-input" class="form-label">Specific resource you might need</label>
                         <select class="form-select" id="specific-resource-input">
-                            <option selected>Standard </option>
-                            <option value="1">Speciallized</option>
-                          </select>
+                            <option selected>Standard</option>
+                            <option value="1">Specialized</option>
+                        </select>
                     </div>
-                    <button type="button" class="btn btn-primary " id="get-location-bton">Submit</button>
-                    <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
 
-
-
+                    <!-- Button to submit the form -->
+                    <button type="button" class="btn btn-primary" id="get-location-bton">Submit</button>
                 </form>
             </div>
         </div>
     </div>
+
+    <!-- JavaScript code for handling form submission and geolocation -->
     <script>
         // Get references to Document Object Model (DOM) elements
         const getLocationBtn = document.getElementById("get-location-bton");
         const casualtyInput = document.getElementById('casualty-number-input');
         const spreadRadius = document.getElementById('spread-radius-input');
-
         const emergency_type_input = document.getElementById('inputGroupSelect01');
         const specific_res_input = document.getElementById('specific-resource-input');
-
 
         var coordis = [];
         var facility_data = ""
 
         function getCookie(name) {
+            // Function to get the value of a cookie by name
             let cookieValue = null;
             if (document.cookie && document.cookie !== '') {
                 const cookies = document.cookie.split(';');
                 for (let i = 0; i < cookies.length; i++) {
                     const cookie = cookies[i].trim();
-                    // Does this cookie string begin with the name we want?
+                    // Check if the cookie string begins with the desired name
                     if (cookie.substring(0, name.length + 1) === (name + '=')) {
                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                         break;
@@ -97,10 +108,11 @@
             return cookieValue;
         }
 
+        // Define an API key for geocoding (Replace it with your actual API key)
         const apiKey = '658eee18a9d00961635940cisab19fd'
-            // Function to fetch location name using reverse geocoding
 
-        function getName(lat, lon) {
+        // Function to fetch location name using reverse geocoding
+        async function getName(lat, lon) {
             const apiUrl = `https://geocode.maps.co/reverse?lat=${lat}&lon=${lon}&api_key=${apiKey}`;
 
             return fetch(apiUrl)
@@ -123,74 +135,78 @@
                 });
         }
 
-
-
         // Event listener for the 'Get Location' button
         getLocationBtn.addEventListener('click', () => {
+            // Check if Casualty Number and Spread Radius are provided
             if (casualtyInput.value == "" && spreadRadius.value == "") {
                 getLocationBtn.disabled == true;
                 getLocationBtn.style.backgroundColor = 'grey'
             } else {
                 getLocationBtn.style.backgroundColor = '#2780e3'
                 getLocationBtn.disabled == false;
-                console.log('getting location.');
+                console.log('Getting location.');
+
                 if (navigator.geolocation) {
+                    // Get current position using geolocation
                     navigator.geolocation.getCurrentPosition(async(position) => {
-                        console.log('calculating');
+                        console.log('Calculating coordinates.');
                         coordis.push([position.coords.latitude, position.coords.longitude]);
-                        console.log('coordinates are: ', coordis);
+                        console.log('Coordinates are:', coordis);
 
                         const latitude = coordis[0][0];
                         const longitude = coordis[0][1];
+
                         const radius = 4000; // 4 kilometers
 
-
                         getLocationBtn.addEventListener('click', () => {
+                            // Check if Casualty Number and Spread Radius are provided
                             if (casualtyInput.value == "" && spreadRadius.value == "") {
                                 getLocationBtn.disabled == true;
                                 getLocationBtn.style.backgroundColor = 'grey'
-
                             } else {
+                                // Get values from form inputs
                                 const casualty_no = casualtyInput.value;
                                 const spread_radius = spreadRadius.value;
-                                const specific_res = specific_res_input.value
+                                const specific_res = specific_res_input.value;
                                 const emergency_type = emergency_type_input.value;
 
-                                console.log('spread_radius = ', spreadRadius.value)
+                                console.log('Spread Radius = ', spreadRadius.value)
                                 getLocationBtn.style.backgroundColor = '#2780e3'
                                 getLocationBtn.disabled == false;
-                                console.log('getting location.');
+                                console.log('Getting location.');
+
                                 if (navigator.geolocation) {
+                                    // Get current position using geolocation
                                     navigator.geolocation.getCurrentPosition(async(position) => {
-                                        console.log('calculating');
+                                        console.log('Calculating coordinates.');
                                         coordis.push([position.coords.latitude, position.coords.longitude]);
-                                        console.log('coordinates are: ', coordis);
-
-
+                                        console.log('Coordinates are:', coordis);
 
                                         const latitude = coordis[0][0];
                                         const longitude = coordis[0][1];
                                         const radius = 4000; // 2 kilometers
-                                        console.log('casualty_no = ', casualty_no)
 
-                                        if (emergency_type == 'Medical') {
-                                            var amenity_type = "amenity = hospital"
-                                        } else if (emergency_type == 'Crime') {
-                                            var amenity_type = "amenity = police"
+                                        console.log('Casualty Number = ', casualty_no)
+
+                                        // Define amenity type based on Emergency Type
+                                        let amenity_type = "";
+                                        if (emergency_type === 'Medical') {
+                                            amenity_type = "amenity = hospital";
+                                        } else if (emergency_type === 'Crime') {
+                                            amenity_type = "amenity = police";
                                         } else {
-                                            var amenity_type = "amenity = fire_station"
+                                            amenity_type = "amenity = fire_station";
                                         }
-                                        // Construct the Overpass query
-                                        console.log("amanenity type is :", amenity_type);
-                                        // Construct the Overpass query
 
+                                        // Construct the Overpass query
+                                        console.log("Amenity type is :", amenity_type);
                                         const query = `[out:json];
-                                                            (
-                                                            node(around:${radius},${latitude},${longitude})[${amenity_type}];
-                                                            );
-                                                            out body;
-                                                            >;
-                                                            out skel qt;`;
+                                                        (
+                                                        node(around:${radius},${latitude},${longitude})[${amenity_type}];
+                                                        );
+                                                        out body;
+                                                        >;
+                                                        out skel qt;`;
 
                                         try {
                                             // Send the query to the Overpass API
@@ -201,10 +217,6 @@
 
                                             const data = await response.json();
                                             console.log(data);
-
-                                            // Process and display the hospital data on your map or in your application
-                                            facility_data = data;
-                                            console.log('first', facility_data);
 
                                             // Reverse Geocoding
                                             const displayName = await getName(latitude, longitude);
@@ -219,7 +231,7 @@
                                                     'Content-Type': 'application/json',
                                                 },
                                                 body: JSON.stringify({
-                                                    data: facility_data,
+                                                    data: data,
                                                     coordinates_x: latitude,
                                                     coordinates_y: longitude,
                                                     name: displayName,
@@ -241,25 +253,17 @@
                             }
                             casualtyInput.value = "";
                             spreadRadius.value = "";
-
                         });
-
-                        // Function that handles the geolocation position
                     });
                 }
             }
-
         });
 
         function showPosition(position) {
-
-
             coords.push([position.coords.latitude, position.coords.longitude]);
-            console.log('coordinates are: ', coords);
-
+            console.log('Coordinates are:', coords);
         }
     </script>
-
 </body>
 
 </html>

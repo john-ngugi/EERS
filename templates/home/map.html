@@ -1,37 +1,53 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+<!-- This line extends the "base.html" template, inheriting its structure and styles -->
+
+{% block content %}
+<!-- This block defines the content section for this page -->
+
 <div class="map-container">
+    <!-- Container for the map -->
     <div id="map"></div>
+
+    <!-- Row containing three cards for different emergency types -->
     <div class="map-row">
+        <!-- Card for Medical Emergency -->
         <div class="card w-25 mt-4 bg-danger shadow-lg">
-            <div class="card-body ms-2  bg-light h-75">
+            <div class="card-body ms-2 bg-light h-75">
                 <h5 class="card-title text-center">Medical Emergency</h5>
                 <p class="card-text">
+                    <!-- Display total available resources for Medical Emergency -->
                     <h6 class="card-text text-center">Total Available Resources</h6>
                     <h1 class="text-center"><strong>{{medical}}</strong></h1>
-
                 </p>
             </div>
         </div>
+
+        <!-- Card for Police Emergency -->
         <div class="card w-25 mt-4 bg-primary shadow-lg">
-            <div class="card-body ms-2  bg-light h-75">
+            <div class="card-body ms-2 bg-light h-75">
                 <h5 class="card-title text-center">Police Emergency</h5>
                 <p class="card-text">
+                    <!-- Display total available resources for Police Emergency -->
                     <h6 class="card-text text-center">Total Available Resources</h6>
                     <h1 class="text-center"><strong>{{crime}}</strong></h1>
-
                 </p>
             </div>
         </div>
+
+        <!-- Card for Fire Emergency -->
         <div class="card w-25 mt-4 bg-warning shadow-lg">
-            <div class="card-body ms-2  bg-light h-75">
+            <div class="card-body ms-2 bg-light h-75">
                 <h5 class="card-title text-center">Fire Emergency</h5>
                 <p class="card-text">
+                    <!-- Display total available resources for Fire Emergency -->
                     <h6 class="card-text text-center">Total Available Resources</h6>
                     <h1 class="text-center"><strong>{{fire}}</strong></h1>
-
                 </p>
             </div>
         </div>
     </div>
 </div>
-{% endblock %} {% block main %} {% endblock %}
+
+{% endblock %} {% block main %}
+<!-- Empty block for the 'main' section -->
+{% endblock %}

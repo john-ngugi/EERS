@@ -12,7 +12,11 @@ class Emergencies(models.Model):
     responded_to = models.BooleanField(default= False)
     def __str__(self):
         return self.location
-
+    
+    
+    class Meta:
+        ordering = ['-location']
+        
 class indexes(models.Model):
     emergency=models.ForeignKey(Emergencies,on_delete= models.CASCADE)   
     index = models.IntegerField(blank=True) 

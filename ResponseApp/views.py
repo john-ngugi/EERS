@@ -9,6 +9,8 @@ from modules import indeces,allocation
 from colorama import init, Fore
 from django.core.paginator import Paginator
 import statistics
+import folium 
+import requests
 # from . import modules 
 # from modules import allocation
 
@@ -261,10 +263,48 @@ def getEmergenciesForMarkers(request):
         
 
 
+def pathfinder(request):
+    emergency = Emergencies.objects.filter(user=request.user).first()
+    
+    # emergency_location = [emergency.lat,emergency.lon]
+    
+    url = 'https://api.openrouteservice.org/v2/directions/driving-car'
+    # api_key = '5b3ce3597851110001cf624821d7977ad17c4d3ab51df82a9d448a97'  
+    start_coords = '36.8116,-1.3012'
+    end_coords = f"{emergency.lon},{emergency.lat}"
+ 
+ 
+    print(end_coords)
+    headers = {
+    'Accept': 'application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8',
+    }
 
+    url = f'https://api.openrouteservice.org/v2/directions/driving-car?api_key=5b3ce3597851110001cf6248336a725ce6af473da9c418c23e073c72&start={start_coords},49.41461&end={end_coords}'
+    print('url is : ', url)
+    response = requests.get(f'https://api.openrouteservice.org/v2/directions/driving-car?api_key=5b3ce3597851110001cf6248336a725ce6af473da9c418c23e073c72&start={start_coords}&end={end_coords}', headers=headers,)
+    context = {}
+    if response.status_code == 200:
+        data = response.json()
+        # print(data)
+        feature = data['features'][0]
+        coordinates = feature['geometry']['coordinates']
 
+        point_list_converted = [(coord[1], coord[0]) for coord in coordinates]
+        print(point_list_converted)
+        # Create Folium map
+        map_object = folium.Map(location=point_list_converted[0], zoom_start=15)
+        folium.PolyLine(locations=point_list_converted, color='red', weight=3, smooth_factor=1).add_to(map_object)
+        
+        # Add custom markers for start and end coordinates
+        folium.Marker(location=point_list_converted[0], popup='Start', icon=folium.Icon(color='red')).add_to(map_object)
+        folium.Marker(location=point_list_converted[-1], popup='End', icon=folium.Icon(color='green')).add_to(map_object)
+        # Convert the map to an HTML string
+        map_html_string = map_object._repr_html_()  # This uses a private method, but it's commonly used for this purpose
+        context['map'] = map_html_string
+    else:
+        print('Error:', response.status_code)
 
-
+    return render(request, 'pathfinder/pathfinder.html', context)
 
 
 

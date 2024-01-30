@@ -13,4 +13,5 @@ urlpatterns=[
     path("data-retriever/",views.dataRetriever,name="data-retriever"),
     path('getChartData/',views.getChartData, name='chartData'),
     path('markers-coordinates/',views.getEmergenciesForMarkers,name='markers-coordinates'),
+    path('pathfinder/',views.pathfinder,name='pathfinder'),
 ]
