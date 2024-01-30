@@ -79,6 +79,18 @@ body{
 .body-wrapper{
     width: 85vw;
 }
+
+
+.form-wrapper{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+
 @media (min-width: 768px) {
 .bd-placeholder-img-lg {
     font-size: 3.5rem;

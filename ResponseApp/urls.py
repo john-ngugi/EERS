@@ -10,5 +10,5 @@ urlpatterns=[
     # Define a URL pattern for the "emergencies" page
     path("emergencies/",views.emergencies,name="emergencies"),
     path("ongoing-emergencies/",views.ongoingEmergencies,name="ongoing-emergencies"),
-    
+    path("data-retriever",views.dataRetriever,name="data-retriever"),
 ]
