@@ -1,29 +1,42 @@
 {% load static %} {% load crispy_forms_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
+    <!-- Set character set and viewport for responsiveness -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>signup</title>
+    <!-- Load Bootstrap CSS from the static files -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 </head>
 
 <body>
 
+    <!-- Form for user registration using POST method and CSRF token for security -->
     <form action="" method="post">
         {% csrf_token %}
-        <div class="form-wrapper d-flex flex-column  align-items-center justify-content-center mt-5">
+        <!-- Container for the form content, using Bootstrap classes -->
+        <div class="container d-flex flex-column align-items-center justify-content-center mt-5">
+            <!-- Card for the registration form -->
             <div class="card">
+                <!-- Card title for the registration section -->
                 <div class="card-title text-center">
                     <h3>Register</h3>
                 </div>
+                <!-- Card body containing the registration form -->
                 <div class="card-body">
-                    {{form|crispy}}
-                    <Button type="submit" class="btn btn-primary ">{{value}}</Button>
+                    <!-- Render the registration form using crispy forms -->
+                    {{ form|crispy }}
+                    <!-- Submit button for the form -->
+                    <button type="submit" class="btn btn-primary ">{{ value }}</button>
                 </div>
+                <!-- Small text with a link to login if the user already has an account -->
+                <small> Already have an account <span> <a href="{% url 'login' %}">login </a></span></small>
             </div>
-
         </div>
     </form>
+</body>
+
+</html>

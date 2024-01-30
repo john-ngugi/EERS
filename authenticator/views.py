@@ -25,7 +25,6 @@ def register(request):
 def login_view(request):
     form = AuthenticationForm()
     if request.method == 'POST':
-
         username = request.POST['username']
         password = request.POST['password']
         print(username,password)
